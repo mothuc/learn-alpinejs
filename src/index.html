@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Alpine JS</title>
+</head>
+
+<body>
+    <h1>Learn Alpine JS - Mr Thuc</h1>
+    <div x-data="{ count: 0 }">
+        <button x-on:click="count++">Increase</button>
+        <span x-text="count"></span>
+        <button x-on:click="count--">Decrease</button>
+    </div>
+
+    <script src="../dist/bundle.js" defer></script>
+</body>
+
+</html>
