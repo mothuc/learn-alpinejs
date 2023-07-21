@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="bg-blue-300  min-h-screen pt-16">
+        <div x-data="searchInput" class="max-w-xl mx-auto bg-blue-400 h-auto rounded-md shadow-xl p-6 ">
+            <details :open="isOpen">
+                <summary class="marker:content-none">
+                    <input x-model="search" class="px-4 py-2 w-full rounded focus:outline-none" type="text"
+                        placeholder="Search">
+                </summary>
+                <div>
+                    <ul class="space-y-2 bg-white p-2 mt-2 rounded" @click.outside="closeSearch">
+                        <template x-for="item in getItems" :key="item.id">
+                            <li class="flex items-center px-2 space-x-2 border-b py-2 hover:bg-slate-200 rounded">
+                                <img class="w-12 rounded-full" :src="item.profile_image" alt="">
+                                <a class="p-4 w-full" x-text="item.employee_name"  @click="cleanSearch"></a>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('searchInput', () => (
+                {
+                    isOpen: false,
+                    search: '',
+                    closeSearch() {
+                        this.search = "";
+                        this.isOpen = false;
+                    },
+                    cleanSearch(e) {
+                        alert(e.target.innerText);
+                        this.search = "";
+                    },
+                    get getItems() {
+                        const filteredItems = this.sourceData.filter(item => {
+                            return item.employee_name.toLowerCase().startsWith(this.search.toLowerCase())
+                        })
+
+                        if (filteredItems.length > 0 && filteredItems.length < this.sourceData.length) {
+                            this.isOpen = true;
+                            return filteredItems
+                        } else {
+                            this.isOpen = false;
+                        }
+                    },
+                    sourceData: [
+
+                        {
+                            id: "1",
+                            employee_name: "Tiger Nixon",
+                            profile_image: "https://randomuser.me/api/portraits/men/1.jpg",
+                        },
+                        {
+                            id: "2",
+                            employee_name: "Garrett Winters",
+                            profile_image: "https://randomuser.me/api/portraits/men/2.jpg",
+                        },
+                        {
+                            id: "3",
+                            employee_name: "Ashton Cox",
+                            profile_image: "https://randomuser.me/api/portraits/men/3.jpg",
+                        },
+                        {
+                            id: "4",
+                            employee_name: "Cedric Kelly",
+                            profile_image: "https://randomuser.me/api/portraits/men/4.jpg",
+                        },
+                        {
+                            id: "5",
+                            employee_name: "Airi Satou",
+                            profile_image: "https://randomuser.me/api/portraits/women/5.jpg",
+                        },
+                        {
+                            id: "6",
+                            employee_name: "Brielle Williamson",
+                            profile_image: "https://randomuser.me/api/portraits/women/6.jpg",
+                        },
+                        {
+                            id: "7",
+                            employee_name: "Herrod Chandler",
+                            profile_image: "https://randomuser.me/api/portraits/men/7.jpg",
+                        },
+                        {
+                            id: "8",
+                            employee_name: "Rhona Davidson",
+                            profile_image: "https://randomuser.me/api/portraits/women/8.jpg",
+                        },
+                        {
+                            id: "9",
+                            employee_name: "Colleen Hurst",
+                            profile_image: "https://randomuser.me/api/portraits/women/9.jpg",
+                        },
+                        {
+                            id: "10",
+                            employee_name: "Sonya Frost",
+                            profile_image: "https://randomuser.me/api/portraits/women/10.jpg",
+                        },
+                        {
+                            id: "11",
+                            employee_name: "Jena Gaines",
+                            profile_image: "https://randomuser.me/api/portraits/women/11.jpg",
+                        },
+                        {
+                            id: "12",
+                            employee_name: "Quinn Flynn",
+                            profile_image: "https://randomuser.me/api/portraits/men/12.jpg",
+                        },
+                        {
+                            id: "13",
+                            employee_name: "Charde Marshall",
+                            profile_image: "https://randomuser.me/api/portraits/women/12.jpg",
+                        },
+                        {
+                            id: "14",
+                            employee_name: "Haley Kennedy",
+                            profile_image: "https://randomuser.me/api/portraits/women/14.jpg",
+                        },
+                        {
+                            id: "15",
+                            employee_name: "Tatyana Fitzpatrick",
+                            profile_image: "https://randomuser.me/api/portraits/women/15.jpg",
+                        },
+                        {
+                            id: "16",
+                            employee_name: "Michael Silva",
+                            profile_image: "https://randomuser.me/api/portraits/men/16.jpg",
+                        },
+                        {
+                            id: "17",
+                            employee_name: "Paul Byrd",
+                            profile_image: "https://randomuser.me/api/portraits/men/17.jpg",
+                        },
+                        {
+                            id: "18",
+                            employee_name: "Gloria Little",
+                            profile_image: "https://randomuser.me/api/portraits/women/18.jpg",
+                        },
+                        {
+                            id: "19",
+                            employee_name: "Bradley Greer",
+                            profile_image: "https://randomuser.me/api/portraits/men/19.jpg",
+                        },
+                        {
+                            id: "20",
+                            employee_name: "Dai Rios",
+                            profile_image: "https://randomuser.me/api/portraits/men/20.jpg",
+                        },
+                        {
+                            id: "21",
+                            employee_name: "Jenette Caldwell",
+                            profile_image: "https://randomuser.me/api/portraits/women/21.jpg",
+                        },
+                        {
+                            id: "22",
+                            employee_name: "Yuri Berry",
+                            profile_image: "https://randomuser.me/api/portraits/men/22.jpg",
+                        },
+                        {
+                            id: "23",
+                            employee_name: "Caesar Vance",
+                            profile_image: "https://randomuser.me/api/portraits/men/23.jpg",
+                        },
+                        {
+                            id: "24",
+                            employee_name: "Doris Wilder",
+                            profile_image: "https://randomuser.me/api/portraits/women/24.jpg",
+                        },
+
+                    ]
+                }
+            ))
+        })
+    </script>
+    <script src="../dist/bundle.js" defer></script>
+</body>
+</html>
