@@ -4,18 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
     <title>Learn Alpine JS</title>
 </head>
 
 <body>
     <h1>Learn Alpine JS - Mr Thuc</h1>
-    <div x-data="{ count: 0 }">
-        <button x-on:click="count++">Increase</button>
+    <!-- Counter -->
+    <div x-data="{count : 0}">
+        <button x-on:click="count++">Increment</button>
         <span x-text="count"></span>
-        <button x-on:click="count--">Decrease</button>
+        <button x-on:click="count > 0 ? count-- : '' ">Decrement</button>
     </div>
 
+    <!-- Toggle content -->
+    <div x-data="{ open: false }">
+        <button @click="open = ! open">Toggle</button>
+        <div x-cloak x-show="open" @click.outside="open = false">Contents...</div>
+    </div>
+
+    <!-- Search -->
+    <div x-data="{
+        search: '',
+        items: ['mec', 'bmw', 'audi'],
+        get filteredItems() {
+            return this.items.filter(
+                item => item.startsWith(this.search)
+            )
+        }
+    }">
+        <input x-model="search" placeholder="Search" type="text">
+
+        <ul>
+            <template x-for="item in filteredItems" :key="item">
+                <li x-text="item"></li>
+            </template>
+        </ul>
+    </div>
+
+    <!-- x-data bind method -->
+    <div x-data="{open: false, get isOpen() {return this.open} ,toggle() { this.open = !this.open }}">
+        <button @click="toggle()">Toggle</button>
+        <div x-cloak x-show="isOpen" x-transition>Contents</div>
+    </div>
+
+    <!-- x-init  -->
+    <div x-data="{ users: [] }"
+        x-init="users = await (await fetch('https://jsonplaceholder.typicode.com/users')).json();">
+        <template x-for="user in users">
+            <li x-text="user.name"></li>
+        </template>
+    </div>
+
+    <!-- x-bind short hand : -->
+    <div x-data="{placeholder: 'Enter your content...'}">
+        <input type="text" :placeholder="placeholder">
+    </div>
+
+    <div x-data="{ open : false }">
+        <button x-on:click="open = ! open">Toggle</button>
+        <div :class="open ? '' : 'hidden'">
+            Dropdown contents
+        </div>
+    </div>
     <script src="../dist/bundle.js" defer></script>
 </body>
-
 </html>
